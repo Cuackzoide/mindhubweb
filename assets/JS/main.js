@@ -36,16 +36,14 @@
 //   }
 // });
 
-// Funcion de navegación con Enter
-function darleEnter(nextInput) {
-  return function (e) {
-    if (e.key === "Enter") {
-      nextInput.focus();
-    }
-  };
-}
+// Funcion de navegación con Enter (ADICIONAL UX)
+const darleEnter = (nextInput) => (e) => {
+  if (e.key === "Enter") {
+    nextInput.focus();
+  }
+};
 
-// Navegacion con Enter jQuery
+// Navegacion con Enter en jQuery
 $("#name").on("keypress", darleEnter($("#email")));
 $("#email").on("keypress", darleEnter($("#message")));
 $("#message").on("keypress", darleEnter($("#form-btn")));
@@ -57,40 +55,39 @@ $("#form-btn").on("focus", (e) => {
 
 // Validación del formulario con jQuery
 $("#form-btn").on("click", () => {
-  if (
-    $("#message").val() !== "" &&
-    $("#message").val().length >= 2 &&
-    $("#name").val() !== "" &&
-    $("#name").val().length >= 3 &&
-    $("#email").val() !== "" &&
-    $("#email").val().includes("@")
-  ) {
-    $("#form-message").html(`<div class="card border-info m-3 d-block">
+  const isValidMessage =
+    $("#message").val() !== "" && $("#message").val().length >= 4;
+  const isValidName = $("#name").val() !== "" && $("#name").val().length >= 3;
+  const isValidEmail =
+    $("#email").val() !== "" && $("#email").val().includes("@");
+
+  if (isValidMessage && isValidName && isValidEmail) {
+    $("#form-message").html(`
+      <div class="card border-info m-3 d-block">
         <div class='card-header bg-info'>Envio exitoso</div>
         <div class='card-body'>¡Gracias por completar el formulario!</div>
-    </div>`);
+      </div>`);
   } else {
-    $("#form-message").html(`<div class="card border-warning m-3 d-block">
+    $("#form-message").html(`
+      <div class="card border-warning m-3 d-block">
         <div class='card-header bg-warning'>Envio erroneo</div>
-        <div class='card-body'>Por favor, complete todos los campos del formulario.</div>
-    </div>`);
+        <div class='card-body'>Por favor, complete correctamente todos los campos.</div>
+      </div>`);
   }
 });
 
-// Scroll suave para navegación con jQuery
-// Selecciona enlaces que inician con #
-// $('a[href^="#"]').on("click", function (event) {
-//   //añade listener de click
-//   event.preventDefault(); // Importante para que no salte inmediatamente
-//   let destino = $(this).attr("href"); // Obtiene el destino del enlace
-//   let alturaNavbar = $(".navbar").outerHeight(); // obtiene la altura de la navbar
-//   // Animación de scroll suave
-//   $("html, body").animate(
-//     {
-//       scrollTop: $(destino).offset().top - alturaNavbar, // lleva a la posición del destino pero debajo del navbar
-//     },
-//     "slow" // animación lenta
-//   );
-//   // Cierra la navbar en celulares
-//   $("#navbarNavDropdown").collapse("hide"); // ¡no mover! genera problemas con el dropdown
-// });
+// Smooth scroll con jQuery (Desde el menú de navegación)
+$('.dropdown-menu a[href^="#"]').on("click", (e) => {
+  e.preventDefault(); // Previene el salto inmediato !important
+  let destino = $(e.currentTarget).attr("href");
+  let alturaTop = $(".navbar").outerHeight() + 20;
+
+  // Animación de scroll al DOCUMENTO COMPLETO
+  $("html, body").animate(
+    {
+      scrollTop: $(destino).offset().top - alturaTop, // Calcula la posición final
+    },
+    "slow"
+  );
+  $(".navbar-collapse").collapse("hide"); // Cierra el menú en celulares !important
+});
