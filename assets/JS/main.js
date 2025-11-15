@@ -77,7 +77,7 @@ $("#form-btn").on("click", () => {
   }
 });
 
-// Scroll suave para navegación con jQuery (estuvo muy dificil Rodrigo :c )
+// Scroll suave para navegación con jQuery
 // Selecciona enlaces que inician con #
 $('a[href^="#"]').on("click", function (event) {
   //añade listener de click
