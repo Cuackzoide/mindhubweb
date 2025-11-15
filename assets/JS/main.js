@@ -79,18 +79,18 @@ $("#form-btn").on("click", () => {
 
 // Scroll suave para navegación con jQuery
 // Selecciona enlaces que inician con #
-$('a[href^="#"]').on("click", function (event) {
-  //añade listener de click
-  event.preventDefault(); // Importante para que no salte inmediatamente
-  let destino = $(this).attr("href"); // Obtiene el destino del enlace
-  let alturaNavbar = $(".navbar").outerHeight(); // obtiene la altura de la navbar
-  // Animación de scroll suave
-  $("html, body").animate(
-    {
-      scrollTop: $(destino).offset().top - alturaNavbar, // lleva a la posición del destino pero debajo del navbar
-    },
-    "slow" // animación lenta
-  );
-  // Cierra la navbar en celulares
-  $("#navbarNavDropdown").collapse("hide"); // ¡no mover! genera problemas con el dropdown
-});
+// $('a[href^="#"]').on("click", function (event) {
+//   //añade listener de click
+//   event.preventDefault(); // Importante para que no salte inmediatamente
+//   let destino = $(this).attr("href"); // Obtiene el destino del enlace
+//   let alturaNavbar = $(".navbar").outerHeight(); // obtiene la altura de la navbar
+//   // Animación de scroll suave
+//   $("html, body").animate(
+//     {
+//       scrollTop: $(destino).offset().top - alturaNavbar, // lleva a la posición del destino pero debajo del navbar
+//     },
+//     "slow" // animación lenta
+//   );
+//   // Cierra la navbar en celulares
+//   $("#navbarNavDropdown").collapse("hide"); // ¡no mover! genera problemas con el dropdown
+// });
